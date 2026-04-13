@@ -1,4 +1,9 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>AttendaTrack — University Attendance Portal</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -6,7 +11,7 @@
   --text:#1a1a1a;--text2:#555;--text3:#888;
   --border:#d0cfc8;--border2:#b0afa8;
   --accent:#1a3a5c;--accent2:#e8f0f8;
-  --green:#1a5c2a;--green-bg:#e8f5ec;
+  --green:#1a5c2a;--green-bg:#e8f5ec;--green-border:#2a8a3a;
   --red:#8b1a1a;--red-bg:#f8e8e8;
   --amber:#6b4a00;--amber-bg:#fdf3dc;
   --card:#ffffff;--radius:10px;
@@ -18,21 +23,21 @@
   --text:#e8e6e0;--text2:#a8a6a0;--text3:#6a6860;
   --border:#2a2e3a;--border2:#3a3e4a;
   --accent:#4a8ac4;--accent2:#1a2535;
-  --green:#4aaa5c;--green-bg:#0f2a14;
+  --green:#4aaa5c;--green-bg:#0f2a14;--green-border:#3a8a4a;
   --red:#cc5555;--red-bg:#2a0f0f;
   --amber:#d4aa44;--amber-bg:#2a200a;
   --card:#181c24;
 }
-body{background:var(--bg);color:var(--text);font-family:var(--font2);min-height:100vh;transition:background .2s,color .2s}
-.wrap{max-width:480px;margin:0 auto;padding:16px}
+html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:var(--font2);transition:background .2s,color .2s}
+.wrap{max-width:480px;margin:0 auto;padding:16px 16px 40px}
 
 .header{display:flex;align-items:center;justify-content:space-between;padding:12px 0 20px}
 .logo-wrap{display:flex;align-items:center;gap:10px}
-.logo-icon{width:36px;height:36px;border:2px solid var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.logo-icon{width:36px;height:36px;border:2px solid var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .logo-icon svg{width:20px;height:20px;stroke:var(--accent);fill:none;stroke-width:2}
-.logo-text{font-family:var(--font);font-size:17px;font-weight:normal;color:var(--text);letter-spacing:.3px}
-.logo-sub{font-size:10px;color:var(--text3);font-family:var(--font2);letter-spacing:.5px;text-transform:uppercase;margin-top:1px}
-.toggle-btn{background:none;border:1px solid var(--border2);border-radius:8px;padding:6px 10px;cursor:pointer;color:var(--text2);font-size:13px;font-family:var(--font2)}
+.logo-text{font-family:var(--font);font-size:17px;color:var(--text);letter-spacing:.3px}
+.logo-sub{font-size:10px;color:var(--text3);letter-spacing:.5px;text-transform:uppercase;margin-top:1px}
+.toggle-btn{background:none;border:1px solid var(--border2);border-radius:8px;padding:6px 12px;cursor:pointer;color:var(--text2);font-size:13px;font-family:var(--font2);flex-shrink:0}
 .toggle-btn:hover{background:var(--bg2)}
 
 .role-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:12px;cursor:pointer;transition:border-color .15s,background .15s;position:relative}
@@ -40,7 +45,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font2);min-height:
 .role-card.active{border-color:var(--accent);background:var(--accent2)}
 .role-title{font-family:var(--font);font-size:18px;color:var(--text);margin-bottom:4px}
 .role-desc{font-size:13px;color:var(--text3);line-height:1.5}
-.role-badge{position:absolute;top:16px;right:16px;background:var(--accent);color:#fff;border-radius:20px;padding:3px 10px;font-size:11px;font-family:var(--font2);letter-spacing:.3px}
+.role-badge{position:absolute;top:16px;right:16px;background:var(--accent);color:#fff;border-radius:20px;padding:3px 10px;font-size:11px;letter-spacing:.3px}
 .check-circle{width:20px;height:20px;border-radius:50%;border:2px solid var(--border2);display:inline-flex;align-items:center;justify-content:center;margin-right:10px;flex-shrink:0;transition:all .15s}
 .role-card.active .check-circle{background:var(--accent);border-color:var(--accent)}
 .check-inner{width:8px;height:8px;border-radius:50%;background:#fff;display:none}
@@ -48,23 +53,26 @@ body{background:var(--bg);color:var(--text);font-family:var(--font2);min-height:
 .role-row{display:flex;align-items:center}
 
 .divider{height:1px;background:var(--border);margin:20px 0}
-.section-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px;font-family:var(--font2)}
+.section-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px}
 
-.btn{display:block;width:100%;padding:13px;border-radius:8px;border:none;cursor:pointer;font-size:15px;font-family:var(--font2);font-weight:normal;transition:opacity .15s,transform .1s;letter-spacing:.2px}
+.btn{display:block;width:100%;padding:13px;border-radius:8px;border:none;cursor:pointer;font-size:15px;font-family:var(--font2);transition:opacity .15s,transform .1s;letter-spacing:.2px}
 .btn:active{transform:scale(.98)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
 .btn-primary{background:var(--accent);color:#fff}
-.btn-primary:hover{opacity:.9}
+.btn-primary:hover:not(:disabled){opacity:.9}
 .btn-secondary{background:var(--bg2);color:var(--text);border:1px solid var(--border)}
-.btn-secondary:hover{background:var(--bg3)}
+.btn-secondary:hover:not(:disabled){background:var(--bg3)}
 .btn-green{background:var(--green);color:#fff}
+.btn-green:hover:not(:disabled){opacity:.9}
 .btn-danger{background:var(--red);color:#fff}
+.btn-danger:hover:not(:disabled){opacity:.9}
 
 .page{display:none}
 .page.active{display:block}
 
 .input-group{margin-bottom:14px}
-.input-label{font-size:12px;color:var(--text2);margin-bottom:5px;display:block;font-family:var(--font2);letter-spacing:.2px}
-.input-field{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:7px;font-size:14px;background:var(--bg);color:var(--text);font-family:var(--font2);outline:none;transition:border-color .15s}
+.input-label{font-size:12px;color:var(--text2);margin-bottom:5px;display:block;letter-spacing:.2px}
+.input-field{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:7px;font-size:14px;background:var(--bg);color:var(--text);font-family:var(--font2);outline:none;transition:border-color .15s;-webkit-appearance:none}
 .input-field:focus{border-color:var(--accent)}
 select.input-field{cursor:pointer}
 
@@ -73,49 +81,58 @@ select.input-field{cursor:pointer}
 .stat-num{font-size:26px;font-family:var(--font);color:var(--text);margin-bottom:2px}
 .stat-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px}
 
-.session-banner{background:var(--green-bg);border:1px solid var(--green);border-radius:8px;padding:14px 16px;margin-bottom:16px}
-.session-banner .title{color:var(--green);font-size:14px;font-weight:normal;margin-bottom:2px;font-family:var(--font)}
-.session-banner .sub{font-size:12px;color:var(--text2)}
-.session-closed{background:var(--red-bg);border-color:var(--red)}
-.session-closed .title{color:var(--red)}
+.session-banner{background:var(--green-bg);border:1px solid var(--green-border);border-radius:8px;padding:14px 16px;margin-bottom:16px}
+.session-banner .s-title{color:var(--green);font-size:15px;font-family:var(--font);margin-bottom:3px}
+.session-banner .s-sub{font-size:12px;color:var(--text2)}
 
 .student-list{border:1px solid var(--border);border-radius:8px;overflow:hidden}
-.student-item{display:flex;align-items:center;padding:12px 14px;border-bottom:1px solid var(--border);background:var(--card);gap:12px}
+.student-item{display:flex;align-items:center;padding:12px 14px;border-bottom:1px solid var(--border);background:var(--card);gap:12px;animation:fadeIn .3s ease}
 .student-item:last-child{border-bottom:none}
-.student-avatar{width:34px;height:34px;border-radius:50%;background:var(--accent2);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:13px;font-family:var(--font2);flex-shrink:0;border:1px solid var(--border)}
+.student-avatar{width:34px;height:34px;border-radius:50%;background:var(--accent2);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;border:1px solid var(--border)}
 .student-name{font-size:14px;color:var(--text);flex:1}
-.student-time{font-size:11px;color:var(--text3)}
+.student-meta{font-size:11px;color:var(--text3);margin-top:1px}
 .present-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
 
 .info-card{background:var(--bg2);border-radius:8px;padding:14px 16px;margin-bottom:14px;border-left:3px solid var(--accent)}
-.info-card .label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
-.info-card .val{font-size:15px;color:var(--text);font-family:var(--font)}
+.info-card .i-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.info-card .i-val{font-size:15px;color:var(--text);font-family:var(--font)}
 
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:10px 18px;border-radius:8px;font-size:13px;font-family:var(--font2);pointer-events:none;opacity:0;transition:opacity .3s;z-index:999;white-space:nowrap}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:10px 20px;border-radius:8px;font-size:13px;pointer-events:none;opacity:0;transition:opacity .3s;z-index:9999;white-space:nowrap;max-width:90vw;text-align:center}
 .toast.show{opacity:1}
 
 .page-title{font-family:var(--font);font-size:22px;color:var(--text);margin-bottom:4px;font-weight:normal}
 .page-sub{font-size:13px;color:var(--text3);margin-bottom:20px;line-height:1.5}
 .back-btn{display:flex;align-items:center;gap:6px;background:none;border:none;color:var(--text2);cursor:pointer;font-size:13px;font-family:var(--font2);margin-bottom:16px;padding:0}
 .back-btn:hover{color:var(--text)}
-.back-arrow{font-size:16px}
 
 .timer-display{font-family:var(--font);font-size:32px;color:var(--accent);text-align:center;margin:8px 0 4px;letter-spacing:1px}
 .timer-label{text-align:center;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:16px}
 
-.pill{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-family:var(--font2)}
-.pill-green{background:var(--green-bg);color:var(--green)}
-.pill-red{background:var(--red-bg);color:var(--red)}
-.pill-amber{background:var(--amber-bg);color:var(--amber)}
-
-.empty-state{text-align:center;padding:32px 16px;color:var(--text3);font-size:14px}
-.empty-icon{font-size:32px;margin-bottom:8px;display:block}
+.empty-state{text-align:center;padding:32px 16px;color:var(--text3);font-size:14px;background:var(--bg2);border-radius:8px}
+.empty-icon{font-size:28px;margin-bottom:8px;display:block}
 
 .tab-bar{display:flex;border-bottom:1px solid var(--border);margin-bottom:16px}
-.tab{flex:1;padding:10px;text-align:center;font-size:13px;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;font-family:var(--font2)}
+.tab{flex:1;padding:10px;text-align:center;font-size:13px;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
 .tab.active{color:var(--accent);border-bottom-color:var(--accent)}
-</style>
 
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px}
+.live-badge{display:inline-flex;align-items:center;gap:5px;background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);border-radius:20px;padding:3px 10px;font-size:11px;margin-bottom:12px}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 1.4s infinite}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+
+.success-box{background:var(--green-bg);border:1px solid var(--green-border);border-radius:12px;padding:28px 20px;text-align:center;margin-bottom:16px}
+.success-check{font-size:40px;margin-bottom:10px;display:block}
+.success-title{font-family:var(--font);font-size:20px;color:var(--green);margin-bottom:4px}
+.success-sub{font-size:13px;color:var(--text2)}
+
+.session-code{font-family:var(--font);font-size:36px;letter-spacing:6px;color:var(--accent);text-align:center;background:var(--bg2);border-radius:8px;padding:16px;margin-bottom:6px;border:1px solid var(--border)}
+.code-label{text-align:center;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:16px}
+</style>
+</head>
+<body>
 <div class="wrap" id="app">
   <div class="header">
     <div class="logo-wrap">
@@ -130,7 +147,7 @@ select.input-field{cursor:pointer}
     <button class="toggle-btn" onclick="toggleDark()" id="darkBtn">Dark</button>
   </div>
 
-  <!-- PAGE: Role Select -->
+  <!-- HOME -->
   <div class="page active" id="page-home">
     <div class="page-title">Welcome</div>
     <div class="page-sub">Select your role to continue to the attendance portal.</div>
@@ -150,27 +167,27 @@ select.input-field{cursor:pointer}
         <span class="check-circle"><span class="check-inner"></span></span>
         <div>
           <div class="role-title">Student</div>
-          <div class="role-desc">Mark attendance for an active class session.</div>
+          <div class="role-desc">Mark your attendance for an active class session.</div>
         </div>
       </div>
       <span class="role-badge" style="background:var(--green)">Student</span>
     </div>
     <div class="divider"></div>
-    <button class="btn btn-primary" id="continue-btn" onclick="goToRole()" disabled style="opacity:.5">Continue</button>
+    <button class="btn btn-primary" id="continue-btn" onclick="goToRole()" disabled>Continue</button>
   </div>
 
-  <!-- PAGE: Lecturer Dashboard -->
+  <!-- LECTURER -->
   <div class="page" id="page-lecturer">
-    <button class="back-btn" onclick="goHome()"><span class="back-arrow">&#8592;</span> Change role</button>
+    <button class="back-btn" onclick="goHome()">&#8592; Change role</button>
     <div class="page-title">Lecturer Panel</div>
     <div class="page-sub">Create and manage your class attendance sessions.</div>
     <div class="tab-bar">
       <div class="tab active" id="tab-session" onclick="switchTab('session')">Session</div>
-      <div class="tab" id="tab-records" onclick="switchTab('records')">Attendance Records</div>
+      <div class="tab" id="tab-records" onclick="switchTab('records')">Records</div>
     </div>
 
     <div id="tab-session-content">
-      <div id="no-session">
+      <div id="lec-setup">
         <div class="section-label">Open a new session</div>
         <div class="input-group">
           <label class="input-label">Course title</label>
@@ -192,13 +209,14 @@ select.input-field{cursor:pointer}
             <option value="200">200 m — Large hall / outdoor</option>
           </select>
         </div>
-        <button class="btn btn-primary" onclick="openSession()">Open Attendance Session</button>
+        <button class="btn btn-primary" id="open-btn" onclick="openSession()">Open Attendance Session</button>
       </div>
 
-      <div id="active-session" style="display:none">
-        <div class="session-banner" id="session-status-banner">
-          <div class="title" id="session-course-name">CS 301</div>
-          <div class="sub" id="session-meta">Active — Engineering Block, Hall A</div>
+      <div id="lec-active" style="display:none">
+        <div class="live-badge"><span class="live-dot"></span> Session Live</div>
+        <div class="session-banner">
+          <div class="s-title" id="lec-active-course"></div>
+          <div class="s-sub" id="lec-active-meta"></div>
         </div>
         <div class="timer-display" id="session-timer">00:00</div>
         <div class="timer-label">Session duration</div>
@@ -208,17 +226,17 @@ select.input-field{cursor:pointer}
             <div class="stat-label">Present</div>
           </div>
           <div class="stat-card">
-            <div class="stat-num" id="stat-enrolled">24</div>
-            <div class="stat-label">Enrolled</div>
+            <div class="stat-num" id="stat-pct">0%</div>
+            <div class="stat-label">Response</div>
           </div>
         </div>
         <div class="section-label">Students present</div>
-        <div id="student-list-wrap">
-          <div class="empty-state" id="empty-students">
+        <div id="lec-student-wrap">
+          <div class="empty-state" id="lec-empty">
             <span class="empty-icon">&#128203;</span>
             Waiting for students to mark attendance...
           </div>
-          <div class="student-list" id="student-list" style="display:none"></div>
+          <div class="student-list" id="lec-student-list" style="display:none"></div>
         </div>
         <div style="margin-top:16px">
           <button class="btn btn-danger" onclick="closeSession()">Close Session</button>
@@ -227,237 +245,391 @@ select.input-field{cursor:pointer}
     </div>
 
     <div id="tab-records-content" style="display:none">
-      <div id="records-empty" class="empty-state">
+      <div id="rec-empty" class="empty-state">
         <span class="empty-icon">&#128196;</span>
-        No completed sessions yet. Close a session to see its records here.
+        No completed sessions yet.
       </div>
-      <div id="records-list"></div>
+      <div id="rec-list"></div>
     </div>
   </div>
 
-  <!-- PAGE: Student -->
+  <!-- STUDENT -->
   <div class="page" id="page-student">
-    <button class="back-btn" onclick="goHome()"><span class="back-arrow">&#8592;</span> Change role</button>
-    <div class="page-title">Student Attendance</div>
-    <div class="page-sub">Mark your attendance for an active class session.</div>
+    <button class="back-btn" onclick="goHome()">&#8592; Change role</button>
+    <div class="page-title">Mark Attendance</div>
+    <div class="page-sub">Find an active session and confirm your presence.</div>
 
-    <div id="student-no-session">
-      <div class="info-card">
-        <div class="label">Status</div>
-        <div class="val">Checking for active sessions...</div>
-      </div>
+    <div id="stu-form">
       <div class="input-group">
-        <label class="input-label">Your full name</label>
-        <input class="input-field" id="stu-name" placeholder="e.g. Chukwuemeka Obi" value="">
+        <label class="input-label">Full name</label>
+        <input class="input-field" id="stu-name" placeholder="e.g. Chukwuemeka Obi">
       </div>
       <div class="input-group">
         <label class="input-label">Matric / Student number</label>
-        <input class="input-field" id="stu-id" placeholder="e.g. CSC/2021/001" value="">
+        <input class="input-field" id="stu-id" placeholder="e.g. CSC/2021/001">
       </div>
-      <button class="btn btn-primary" onclick="checkSession()" style="margin-bottom:10px">Find Active Session</button>
+      <button class="btn btn-primary" id="find-btn" onclick="findSession()">Find Active Session</button>
     </div>
 
-    <div id="student-found-session" style="display:none">
+    <div id="stu-found" style="display:none">
       <div class="session-banner">
-        <div class="title" id="stu-session-course">CS 301</div>
-        <div class="sub" id="stu-session-meta">Opened by Dr. Adeyemi — Hall A</div>
+        <div class="s-title" id="stu-course-name"></div>
+        <div class="s-sub" id="stu-course-meta"></div>
       </div>
       <div class="info-card">
-        <div class="label">Your details</div>
-        <div class="val" id="stu-details-display"></div>
+        <div class="i-label">Your details</div>
+        <div class="i-val" id="stu-details"></div>
       </div>
-      <div class="info-card" id="location-status" style="border-left-color:var(--amber)">
-        <div class="label">Location verification</div>
-        <div class="val" id="location-val">Detecting your location...</div>
+      <div class="info-card" id="stu-loc-card">
+        <div class="i-label">Location verification</div>
+        <div class="i-val" id="stu-loc-val"><span class="spinner"></span>Detecting location...</div>
       </div>
-      <button class="btn btn-green" id="mark-btn" onclick="markAttendance()" disabled style="opacity:.5;margin-bottom:10px">Mark Attendance</button>
+      <button class="btn btn-green" id="mark-btn" onclick="markAttendance()" disabled style="margin-bottom:10px">Mark Attendance</button>
       <button class="btn btn-secondary" onclick="cancelStudent()">Cancel</button>
     </div>
 
-    <div id="student-marked" style="display:none">
-      <div class="session-banner" style="background:var(--green-bg);border-color:var(--green);text-align:center;padding:24px">
-        <div style="font-size:36px;margin-bottom:8px">&#10003;</div>
-        <div class="title" style="color:var(--green);font-size:18px" id="marked-course">Attendance Recorded</div>
-        <div class="sub" id="marked-time"></div>
+    <div id="stu-success" style="display:none">
+      <div class="success-box">
+        <span class="success-check">&#10003;</span>
+        <div class="success-title">Attendance Recorded</div>
+        <div class="success-sub" id="stu-success-sub"></div>
       </div>
       <div class="info-card">
-        <div class="label">Recorded for</div>
-        <div class="val" id="marked-name"></div>
+        <div class="i-label">Course</div>
+        <div class="i-val" id="suc-course"></div>
       </div>
       <div class="info-card">
-        <div class="label">Matric number</div>
-        <div class="val" id="marked-id"></div>
+        <div class="i-label">Student</div>
+        <div class="i-val" id="suc-name"></div>
       </div>
-      <button class="btn btn-secondary" onclick="resetStudent()" style="margin-top:8px">Done</button>
+      <div class="info-card">
+        <div class="i-label">Matric number</div>
+        <div class="i-val" id="suc-id"></div>
+      </div>
+      <button class="btn btn-secondary" onclick="resetStudent()">Done</button>
     </div>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
-<script>
-var dark=false,role=null,sessionOpen=false,sessionStart=null,timerInterval=null;
-var sessionData={course:'',lecturer:'',room:'',radius:100};
-var presentStudents=[];
-var completedSessions=[];
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, set, get, push, onValue, remove, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-function toggleDark(){
-  dark=!dark;
-  document.body.classList.toggle('dark',dark);
-  document.getElementById('darkBtn').textContent=dark?'Light':'Dark';
+const firebaseConfig = {
+  apiKey: "AIzaSyB2D5CH0c38bOUHUcSlwea2-k64bxE5keY",
+  authDomain: "attendance-system-demo-dbaf0.firebaseapp.com",
+  databaseURL: "https://attendance-system-demo-dbaf0-default-rtdb.firebaseio.com",
+  projectId: "attendance-system-demo-dbaf0",
+  storageBucket: "attendance-system-demo-dbaf0.firebasestorage.app",
+  messagingSenderId: "102587666436",
+  appId: "1:102587666436:web:0f85dd9a54ec742e762551"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+let dark = false;
+let role = null;
+let sessionId = null;
+let timerInterval = null;
+let sessionStart = null;
+let unsubscribe = null;
+let completedSessions = [];
+
+window.toggleDark = function() {
+  dark = !dark;
+  document.body.classList.toggle('dark', dark);
+  document.getElementById('darkBtn').textContent = dark ? 'Light' : 'Dark';
+};
+
+function toast(msg, ms) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), ms || 2400);
 }
-function showToast(msg,ms){
-  var t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
-  setTimeout(function(){t.classList.remove('show')},ms||2200);
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
 }
-function showPage(id){
-  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
-  document.getElementById('page-'+id).classList.add('active');
-}
-function selectRole(r){
-  role=r;
-  document.querySelectorAll('.role-card').forEach(function(c){c.classList.remove('active')});
-  document.getElementById('role-'+r).classList.add('active');
-  var btn=document.getElementById('continue-btn');
-  btn.disabled=false;btn.style.opacity='1';
-}
-function goToRole(){
-  if(!role)return;
-  if(role==='lecturer')showPage('lecturer');
-  else showPage('student');
-}
-function goHome(){
+
+window.selectRole = function(r) {
+  role = r;
+  document.querySelectorAll('.role-card').forEach(c => c.classList.remove('active'));
+  document.getElementById('role-' + r).classList.add('active');
+  const btn = document.getElementById('continue-btn');
+  btn.disabled = false;
+};
+
+window.goToRole = function() {
+  if (!role) return;
+  showPage(role === 'lecturer' ? 'lecturer' : 'student');
+};
+
+window.goHome = function() {
+  if (unsubscribe) { unsubscribe(); unsubscribe = null; }
   showPage('home');
-  role=null;
-  document.querySelectorAll('.role-card').forEach(function(c){c.classList.remove('active')});
-  var btn=document.getElementById('continue-btn');
-  btn.disabled=true;btn.style.opacity='.5';
-}
-function switchTab(t){
-  document.getElementById('tab-session').classList.toggle('active',t==='session');
-  document.getElementById('tab-records').classList.toggle('active',t==='records');
-  document.getElementById('tab-session-content').style.display=t==='session'?'block':'none';
-  document.getElementById('tab-records-content').style.display=t==='records'?'block':'none';
-}
-function openSession(){
-  var course=document.getElementById('lec-course').value.trim();
-  var name=document.getElementById('lec-name').value.trim();
-  var room=document.getElementById('lec-room').value.trim();
-  var radius=document.getElementById('lec-radius').value;
-  if(!course||!name||!room){showToast('Please fill in all fields');return;}
-  sessionData={course:course,lecturer:name,room:room,radius:parseInt(radius)};
-  sessionOpen=true;presentStudents=[];sessionStart=new Date();
-  document.getElementById('no-session').style.display='none';
-  document.getElementById('active-session').style.display='block';
-  document.getElementById('session-course-name').textContent=course;
-  document.getElementById('session-meta').textContent='Active — '+room+' | '+radius+'m geofence';
-  updateStudentList();
-  timerInterval=setInterval(updateTimer,1000);
-  showToast('Session opened successfully');
-}
-function updateTimer(){
-  if(!sessionStart)return;
-  var sec=Math.floor((new Date()-sessionStart)/1000);
-  var m=Math.floor(sec/60),s=sec%60;
-  document.getElementById('session-timer').textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
-}
-function closeSession(){
-  if(!confirm('Close this session? Students will no longer be able to mark attendance.'))return;
-  sessionOpen=false;clearInterval(timerInterval);
-  var record={course:sessionData.course,room:sessionData.room,start:sessionStart,end:new Date(),students:presentStudents.slice()};
-  completedSessions.unshift(record);
-  document.getElementById('no-session').style.display='block';
-  document.getElementById('active-session').style.display='none';
-  document.getElementById('lec-course').value='';document.getElementById('lec-room').value='';
-  renderRecords();showToast('Session closed. Records saved.');
-}
-function updateStudentList(){
-  var n=presentStudents.length;
-  document.getElementById('stat-present').textContent=n;
-  var empty=document.getElementById('empty-students');
-  var list=document.getElementById('student-list');
-  if(n===0){empty.style.display='block';list.style.display='none';return;}
-  empty.style.display='none';list.style.display='block';
-  list.innerHTML=presentStudents.map(function(s){
-    var init=(s.name.split(' ').map(function(w){return w[0]}).join('').substring(0,2)).toUpperCase();
-    return '<div class="student-item"><div class="student-avatar">'+init+'</div><div style="flex:1"><div class="student-name">'+s.name+'</div><div class="student-time">'+s.id+' &nbsp;&#183;&nbsp; '+s.time+'</div></div><span class="present-dot"></span></div>';
-  }).join('');
-}
-function renderRecords(){
-  var list=document.getElementById('records-list');
-  var empty=document.getElementById('records-empty');
-  if(completedSessions.length===0){empty.style.display='block';list.innerHTML='';return;}
-  empty.style.display='none';
-  list.innerHTML=completedSessions.map(function(r,i){
-    var dur=Math.floor((r.end-r.start)/60000);
-    return '<div class="info-card" style="margin-bottom:10px"><div class="label">'+fmtDate(r.start)+' &nbsp;&#183;&nbsp; '+dur+' min &nbsp;&#183;&nbsp; '+r.room+'</div><div class="val">'+r.course+'</div><div style="margin-top:8px;font-size:13px;color:var(--text2)">'+r.students.length+' students present'+(r.students.length>0?' — '+r.students.map(function(s){return s.name}).join(', ').substring(0,60)+(r.students.map(function(s){return s.name}).join(', ').length>60?'...':''):'')+'</div></div>';
-  }).join('');
-}
-function fmtDate(d){return d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+', '+d.toLocaleDateString([],{day:'numeric',month:'short'})}
+  role = null;
+  document.querySelectorAll('.role-card').forEach(c => c.classList.remove('active'));
+  document.getElementById('continue-btn').disabled = true;
+};
 
-function checkSession(){
-  var name=document.getElementById('stu-name').value.trim();
-  var id=document.getElementById('stu-id').value.trim();
-  if(!name||!id){showToast('Please enter your name and matric number');return;}
-  if(!sessionOpen){showToast('No active session found. Ask your lecturer to open one.');return;}
-  if(presentStudents.some(function(s){return s.id===id})){showToast('You have already marked attendance for this session.');return;}
-  document.getElementById('stu-session-course').textContent=sessionData.course;
-  document.getElementById('stu-session-meta').textContent='Opened by '+sessionData.lecturer+' — '+sessionData.room;
-  document.getElementById('stu-details-display').textContent=name+' / '+id;
-  document.getElementById('student-no-session').style.display='none';
-  document.getElementById('student-found-session').style.display='block';
-  checkLocation(name,id);
+window.switchTab = function(t) {
+  document.getElementById('tab-session').classList.toggle('active', t === 'session');
+  document.getElementById('tab-records').classList.toggle('active', t === 'records');
+  document.getElementById('tab-session-content').style.display = t === 'session' ? 'block' : 'none';
+  document.getElementById('tab-records-content').style.display = t === 'records' ? 'block' : 'none';
+};
+
+window.openSession = async function() {
+  const course = document.getElementById('lec-course').value.trim();
+  const name = document.getElementById('lec-name').value.trim();
+  const room = document.getElementById('lec-room').value.trim();
+  const radius = parseInt(document.getElementById('lec-radius').value);
+  if (!course || !name || !room) { toast('Please fill in all fields'); return; }
+
+  const btn = document.getElementById('open-btn');
+  btn.disabled = true;
+  btn.textContent = 'Opening session...';
+
+  try {
+    const sessRef = ref(db, 'session');
+    await set(sessRef, {
+      course, lecturer: name, room, radius,
+      openedAt: Date.now(),
+      active: true,
+      students: {}
+    });
+
+    sessionId = 'session';
+    sessionStart = new Date();
+
+    document.getElementById('lec-setup').style.display = 'none';
+    document.getElementById('lec-active').style.display = 'block';
+    document.getElementById('lec-active-course').textContent = course;
+    document.getElementById('lec-active-meta').textContent = name + ' · ' + room + ' · ' + radius + 'm geofence';
+
+    timerInterval = setInterval(updateTimer, 1000);
+    listenToStudents();
+    toast('Session is now live');
+  } catch(e) {
+    toast('Error opening session. Check your connection.');
+    btn.disabled = false;
+    btn.textContent = 'Open Attendance Session';
+  }
+};
+
+function listenToStudents() {
+  const studRef = ref(db, 'session/students');
+  unsubscribe = onValue(studRef, snap => {
+    const data = snap.val() || {};
+    const students = Object.values(data);
+    document.getElementById('stat-present').textContent = students.length;
+    document.getElementById('stat-pct').textContent = students.length > 0 ? Math.round((students.length / 24) * 100) + '%' : '0%';
+    const empty = document.getElementById('lec-empty');
+    const list = document.getElementById('lec-student-list');
+    if (students.length === 0) {
+      empty.style.display = 'block';
+      list.style.display = 'none';
+    } else {
+      empty.style.display = 'none';
+      list.style.display = 'block';
+      list.innerHTML = students.sort((a,b) => a.timestamp - b.timestamp).map(s => {
+        const init = s.name.split(' ').map(w => w[0]).join('').substring(0,2).toUpperCase();
+        const t = new Date(s.timestamp).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+        return `<div class="student-item">
+          <div class="student-avatar">${init}</div>
+          <div style="flex:1">
+            <div class="student-name">${s.name}</div>
+            <div class="student-meta">${s.matric} &nbsp;·&nbsp; ${t}</div>
+          </div>
+          <span class="present-dot"></span>
+        </div>`;
+      }).join('');
+    }
+  });
 }
-function checkLocation(name,id){
-  var locVal=document.getElementById('location-val');
-  var locCard=document.getElementById('location-status');
-  var markBtn=document.getElementById('mark-btn');
-  if(!navigator.geolocation){
-    locVal.textContent='Geolocation not supported — demo mode active';
-    locCard.style.borderLeftColor='var(--green)';
-    markBtn.disabled=false;markBtn.style.opacity='1';
+
+function updateTimer() {
+  if (!sessionStart) return;
+  const sec = Math.floor((new Date() - sessionStart) / 1000);
+  const m = Math.floor(sec / 60), s = sec % 60;
+  document.getElementById('session-timer').textContent =
+    (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+}
+
+window.closeSession = async function() {
+  if (!confirm('Close this session? Students will no longer be able to mark attendance.')) return;
+
+  clearInterval(timerInterval);
+  if (unsubscribe) { unsubscribe(); unsubscribe = null; }
+
+  try {
+    const snap = await get(ref(db, 'session'));
+    const data = snap.val();
+    if (data) {
+      const students = Object.values(data.students || {});
+      completedSessions.unshift({
+        course: data.course, room: data.room,
+        lecturer: data.lecturer,
+        start: new Date(data.openedAt),
+        end: new Date(),
+        students
+      });
+      renderRecords();
+    }
+    await remove(ref(db, 'session'));
+  } catch(e) {}
+
+  document.getElementById('lec-active').style.display = 'none';
+  document.getElementById('lec-setup').style.display = 'block';
+  document.getElementById('open-btn').disabled = false;
+  document.getElementById('open-btn').textContent = 'Open Attendance Session';
+  document.getElementById('lec-course').value = '';
+  document.getElementById('lec-room').value = '';
+  toast('Session closed. Records saved.');
+};
+
+function renderRecords() {
+  const list = document.getElementById('rec-list');
+  const empty = document.getElementById('rec-empty');
+  if (completedSessions.length === 0) { empty.style.display = 'block'; list.innerHTML = ''; return; }
+  empty.style.display = 'none';
+  list.innerHTML = completedSessions.map(r => {
+    const dur = Math.floor((r.end - r.start) / 60000);
+    const names = r.students.map(s => s.name).join(', ');
+    return `<div class="info-card" style="margin-bottom:10px">
+      <div class="i-label">${r.start.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})} · ${dur} min · ${r.room}</div>
+      <div class="i-val">${r.course}</div>
+      <div style="margin-top:8px;font-size:13px;color:var(--text2)">${r.students.length} student${r.students.length !== 1 ? 's' : ''} present${names ? ' — ' + names.substring(0,80) + (names.length > 80 ? '...' : '') : ''}</div>
+    </div>`;
+  }).join('');
+}
+
+window.findSession = async function() {
+  const name = document.getElementById('stu-name').value.trim();
+  const id = document.getElementById('stu-id').value.trim();
+  if (!name || !id) { toast('Please enter your name and matric number'); return; }
+
+  const btn = document.getElementById('find-btn');
+  btn.disabled = true;
+  btn.textContent = 'Searching...';
+
+  try {
+    const snap = await get(ref(db, 'session'));
+    if (!snap.exists() || !snap.val().active) {
+      toast('No active session found. Ask your lecturer to open one.');
+      btn.disabled = false;
+      btn.textContent = 'Find Active Session';
+      return;
+    }
+
+    const data = snap.val();
+    const existing = Object.values(data.students || {});
+    if (existing.some(s => s.matric === id)) {
+      toast('You have already marked attendance for this session.');
+      btn.disabled = false;
+      btn.textContent = 'Find Active Session';
+      return;
+    }
+
+    document.getElementById('stu-course-name').textContent = data.course;
+    document.getElementById('stu-course-meta').textContent = 'Opened by ' + data.lecturer + ' · ' + data.room;
+    document.getElementById('stu-details').textContent = name + ' / ' + id;
+    document.getElementById('stu-form').style.display = 'none';
+    document.getElementById('stu-found').style.display = 'block';
+
+    verifyLocation(name, id, data.radius);
+  } catch(e) {
+    toast('Connection error. Please try again.');
+    btn.disabled = false;
+    btn.textContent = 'Find Active Session';
+  }
+};
+
+function verifyLocation(name, id, radius) {
+  const locVal = document.getElementById('stu-loc-val');
+  const locCard = document.getElementById('stu-loc-card');
+  const markBtn = document.getElementById('mark-btn');
+
+  markBtn.setAttribute('data-name', name);
+  markBtn.setAttribute('data-id', id);
+
+  if (!navigator.geolocation) {
+    locVal.textContent = 'Geolocation not supported — demo mode';
+    locCard.style.borderLeftColor = 'var(--green)';
+    markBtn.disabled = false;
     return;
   }
-  locVal.textContent='Requesting location permission...';
-  navigator.geolocation.getCurrentPosition(function(pos){
-    locVal.textContent='Location verified &#10003; — within '+sessionData.radius+'m geofence';
-    locCard.style.borderLeftColor='var(--green)';
-    markBtn.disabled=false;markBtn.style.opacity='1';
-    markBtn.setAttribute('data-name',name);
-    markBtn.setAttribute('data-id',id);
-  },function(err){
-    locVal.textContent='Location unavailable — demo: tap Mark Attendance to continue';
-    locCard.style.borderLeftColor='var(--amber)';
-    markBtn.disabled=false;markBtn.style.opacity='1';
-    markBtn.setAttribute('data-name',name);
-    markBtn.setAttribute('data-id',id);
-  },{timeout:8000});
+
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      locVal.innerHTML = '&#10003; Location verified — within ' + radius + 'm geofence';
+      locCard.style.borderLeftColor = 'var(--green)';
+      markBtn.disabled = false;
+    },
+    err => {
+      locVal.textContent = 'Location unavailable — tap Mark Attendance to continue';
+      locCard.style.borderLeftColor = 'var(--amber)';
+      markBtn.disabled = false;
+    },
+    { timeout: 8000 }
+  );
 }
-function markAttendance(){
-  var btn=document.getElementById('mark-btn');
-  var name=btn.getAttribute('data-name');
-  var id=btn.getAttribute('data-id');
-  var now=new Date();
-  var timeStr=now.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-  presentStudents.push({name:name,id:id,time:timeStr});
-  updateStudentList();
-  document.getElementById('student-found-session').style.display='none';
-  document.getElementById('student-marked').style.display='block';
-  document.getElementById('marked-course').textContent=sessionData.course;
-  document.getElementById('marked-time').textContent='Recorded at '+timeStr;
-  document.getElementById('marked-name').textContent=name;
-  document.getElementById('marked-id').textContent=id;
-  showToast('Attendance marked successfully');
-}
-function cancelStudent(){
-  document.getElementById('student-no-session').style.display='block';
-  document.getElementById('student-found-session').style.display='none';
-}
-function resetStudent(){
-  document.getElementById('student-marked').style.display='none';
-  document.getElementById('student-no-session').style.display='block';
-  document.getElementById('stu-name').value='';
-  document.getElementById('stu-id').value='';
-}
+
+window.markAttendance = async function() {
+  const btn = document.getElementById('mark-btn');
+  const name = btn.getAttribute('data-name');
+  const id = btn.getAttribute('data-id');
+
+  btn.disabled = true;
+  btn.textContent = 'Recording...';
+
+  try {
+    const studRef = ref(db, 'session/students');
+    await push(studRef, {
+      name, matric: id, timestamp: Date.now()
+    });
+
+    const snap = await get(ref(db, 'session'));
+    const data = snap.val();
+
+    document.getElementById('stu-found').style.display = 'none';
+    document.getElementById('stu-success').style.display = 'block';
+    document.getElementById('stu-success-sub').textContent = 'Recorded at ' + new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+    document.getElementById('suc-course').textContent = data ? data.course : '';
+    document.getElementById('suc-name').textContent = name;
+    document.getElementById('suc-id').textContent = id;
+    toast('Attendance marked successfully');
+  } catch(e) {
+    toast('Error recording attendance. Please try again.');
+    btn.disabled = false;
+    btn.textContent = 'Mark Attendance';
+  }
+};
+
+window.cancelStudent = function() {
+  document.getElementById('stu-form').style.display = 'block';
+  document.getElementById('stu-found').style.display = 'none';
+  document.getElementById('find-btn').disabled = false;
+  document.getElementById('find-btn').textContent = 'Find Active Session';
+  document.getElementById('mark-btn').disabled = true;
+};
+
+window.resetStudent = function() {
+  document.getElementById('stu-success').style.display = 'none';
+  document.getElementById('stu-form').style.display = 'block';
+  document.getElementById('stu-name').value = '';
+  document.getElementById('stu-id').value = '';
+  document.getElementById('find-btn').disabled = false;
+  document.getElementById('find-btn').textContent = 'Find Active Session';
+  document.getElementById('mark-btn').disabled = true;
+  document.getElementById('stu-loc-val').innerHTML = '<span class="spinner"></span>Detecting location...';
+  document.getElementById('stu-loc-card').style.borderLeftColor = 'var(--accent)';
+};
 </script>
+</body>
+</html>
